@@ -13,18 +13,27 @@ namespace Cinema_manager
         public double Price { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
+        public Status SeatStatus { get; set; }
 
-        public Seat() 
+        public enum Status{
+            FREE,
+            SELECTED,
+            TAKEN
+        }
+
+        public Seat()
         { 
             Price = 0;
             Row = 0;
             Column = 0;
+            SeatStatus = Status.FREE;
         }
-        public Seat(double price, int row, int column)
+        public Seat(double price, int row, int column, Status status)
         {
             this.Price = price;
             this.Row = row; 
             this.Column = column;
+            this.SeatStatus = status;
         }
 
         public override string ToString() 
