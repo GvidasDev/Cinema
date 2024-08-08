@@ -45,8 +45,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1288, 759);
             this.Controls.Add(this.richTextBox1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Cinema manager";
+            this.Text = "Cinema manager";
             this.ResumeLayout(false);
 
         }

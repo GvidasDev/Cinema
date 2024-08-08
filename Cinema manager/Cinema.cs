@@ -10,5 +10,27 @@ namespace Cinema_manager
     {
         public List<Movie> Movies { get; set; } = new List<Movie>();
         public List<Schedule> Schedule { get; set; } = new List<Schedule>();
+
+        public Cinema()
+        { 
+            Movies = new List<Movie>();
+            Schedule = new List<Schedule>();
+        }
+
+        public Cinema(List<Movie> movies, List<Schedule> schedule)
+        {
+            Movies = movies;
+            Schedule = schedule;
+        }
+
+        public string Output()
+        {
+            string line = "";
+            for (int i = 0; i < Schedule.Count; i++)
+            {
+                line += Schedule[i].ToString() + "\n";
+            }
+            return line;
+        }
     }
 }

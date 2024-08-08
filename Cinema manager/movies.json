@@ -1,0 +1,52 @@
+[
+  {
+    "Id": 1,
+    "Title": "Inception",
+    "Description": "A skilled thief is given a chance at redemption if he can successfully perform inception on a powerful businessman."
+  },
+  {
+    "Id": 2,
+    "Title": "The Matrix",
+    "Description": "A hacker discovers the world is a simulation and joins a rebellion to free humanity."
+  },
+  {
+    "Id": 3,
+    "Title": "Interstellar",
+    "Description": "A team of explorers travels through a wormhole in space to ensure humanity's survival."
+  },
+  {
+    "Id": 4,
+    "Title": "The Shawshank Redemption",
+    "Description": "A banker is sentenced to life in prison and forms a friendship with a fellow inmate while planning an escape."
+  },
+  {
+    "Id": 5,
+    "Title": "The Godfather",
+    "Description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."
+  },
+  {
+    "Id": 6,
+    "Title": "Pulp Fiction",
+    "Description": "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption."
+  },
+  {
+    "Id": 7,
+    "Title": "Forrest Gump",
+    "Description": "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold from the perspective of an Alabama man with an IQ of 75."
+  },
+  {
+    "Id": 8,
+    "Title": "The Dark Knight",
+    "Description": "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham."
+  },
+  {
+    "Id": 9,
+    "Title": "Fight Club",
+    "Description": "An insomniac office worker and a soap salesman build a global organization to help people with insomnia."
+  },
+  {
+    "Id": 10,
+    "Title": "The Lord of the Rings: The Return of the King",
+    "Description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring."
+  }
+]
