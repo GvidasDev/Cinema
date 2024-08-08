@@ -15,6 +15,9 @@ namespace Cinema_manager
         public Form1()
         {
             InitializeComponent();
+
+            Theater theater = new Theater(9, 9);
+            richTextBox1.Text = theater.Output();
         }
     }
 }

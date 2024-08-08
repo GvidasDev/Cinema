@@ -28,6 +28,13 @@ namespace Cinema_manager
             Column = 0;
             SeatStatus = Status.FREE;
         }
+        public Seat(double price, int row, int column)
+        {
+            this.Price = price;
+            this.Row = row;
+            this.Column = column;
+            this.SeatStatus = Status.FREE;
+        }
         public Seat(double price, int row, int column, Status status)
         {
             this.Price = price;
