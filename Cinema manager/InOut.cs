@@ -14,7 +14,7 @@ namespace Cinema_manager
         public static List<Movie> GetMovies()
         {
             List<Movie> movies = new List<Movie>();
-            string filepath = "..\\..\\movies.json";
+            string filepath = "..\\..\\Data files\\movies.json";
             try
             {
                 string jsonString = File.ReadAllText(filepath);
@@ -31,7 +31,7 @@ namespace Cinema_manager
         public static List<Schedule> GetSchedules(List<Movie> movies)
         {
             List<Schedule> schedules = new List<Schedule>();
-            string filePath = "..\\..\\schedule.json";
+            string filePath = "..\\..\\Data files\\schedule.json";
             try
             {
                 string schedulesJsonString = File.ReadAllText(filePath);
