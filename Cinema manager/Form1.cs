@@ -39,40 +39,50 @@ namespace Cinema_manager
 
         private int CreateUIBlock(Panel parentPanel, int index, int yOffset, Schedule schedule)
         {
+
             // Create a Panel to hold the UI block
-            Panel panel = new Panel();
-            panel.BorderStyle = BorderStyle.FixedSingle;
-            panel.Width = 200;
-            panel.Height = 150;
-            panel.Top = index * 160; // Adjust the position based on index
-            panel.Left = 10;
+            Panel panel = new Panel
+            {
+                BorderStyle = BorderStyle.FixedSingle,
+                Width = 500, // Adjust the width to fit all content horizontally
+                Top = yOffset, // Adjust the position based on index
+                Left = 10
+            };
 
             // Create the first label
-            Label label1 = new Label();
-            label1.Text = $"{schedule.Movie.Title}";
-            label1.Top = 10;
-            label1.Left = 10;
+            Label label1 = new Label
+            {
+                Text = $"{schedule.Movie.Title}",
+                Top = 10,
+                Left = 10
+            };
             panel.Controls.Add(label1);
 
             // Create the second label
-            Label label2 = new Label();
-            label2.Text = $"{schedule.Movie.Description}";
-            label2.Top = 40;
-            label2.Left = 10;
+            Label label2 = new Label
+            {
+                Text = $"{schedule.Movie.Description}",
+                Top = 10,
+                Left = 100 
+            };
             panel.Controls.Add(label2);
 
             // Create the third label
-            Label label3 = new Label();
-            label3.Text = $"{schedule.StartTime}";
-            label3.Top = 70;
-            label3.Left = 10;
+            Label label3 = new Label
+            {
+                Text = $"{schedule.StartTime}",
+                Top = 10,
+                Left = 300
+            };
             panel.Controls.Add(label3);
 
             // Create the button
-            Button button = new Button();
-            button.Text = $"Tickets";
-            button.Top = 100;
-            button.Left = 10;
+            Button button = new Button
+            {
+                Text = $"Tickets",
+                Top = 10,
+                Left = 400 
+            };
             button.Click += (sender, e) => MessageBox.Show($"Button {index + 1} clicked!");
             panel.Controls.Add(button);
 
@@ -80,7 +90,7 @@ namespace Cinema_manager
             parentPanel.Controls.Add(panel);
 
             // Return the height of this block to update yOffset
-            return panel.Height + 10; // 10 pixels for spacing between blocks
+            return panel.Height + 4; // 10 pixels for spacing between blocks
         }
     }
 }
