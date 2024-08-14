@@ -37,6 +37,11 @@ namespace Cinema_manager
             theater = new Theater(9, 9);
         }
 
+        public Theater GetTheater()
+        {
+            return theater;
+        }
+
         public override string ToString()
         {
             return string.Format($"Movie: {Movie.Title}, Start time: {StartTime}, End time: {EndTime}");

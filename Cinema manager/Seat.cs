@@ -43,6 +43,42 @@ namespace Cinema_manager
             this.SeatStatus = status;
         }
 
+        public void SetFree()
+        {
+            SeatStatus = Status.FREE;
+        }
+
+        public void SetSelected()
+        {
+            SeatStatus = Status.SELECTED;
+        }
+
+        public void SetTaken()
+        {
+            SeatStatus = Status.TAKEN;
+        }
+
+        public bool IsFree()
+        {
+            if(SeatStatus == Status.FREE)
+                return true;
+            else return false;
+        }
+
+        public bool IsSelected()
+        {
+            if (SeatStatus == Status.SELECTED)
+                return true;
+            else return false;
+        }
+
+        public bool IsTaken()
+        {
+            if (SeatStatus == Status.TAKEN)
+                return true;
+            else return false;
+        }
+
         public override string ToString() 
         {
             return string.Format($"Seat: row {Row}, column: {Column}, price: {Price}");

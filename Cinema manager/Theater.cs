@@ -46,6 +46,21 @@ namespace Cinema_manager
             return seats;
         }
 
+        public Seat getSeat(int row, int col)
+        {
+            return Seats.FirstOrDefault(s => s.Row == row && s.Column == col);
+        }
+
+        public void setSeat(Seat seat, int row, int col)
+        {
+            int index = Seats.FindIndex(s => s.Row == row && s.Column == col);
+            if (index != -1)
+            {
+                Seats[index] = seat;
+            }
+        }
+
+
         public string Output()
         {
             string line = "";

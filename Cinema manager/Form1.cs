@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace Cinema_manager
 {
-
     public partial class Form1 : Form
     {
+        private Panel mainContainerPanel;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,33 +17,47 @@ namespace Cinema_manager
             List<Schedule> scheduleList = InOut.GetSchedules(movieList);
             Cinema cinema = new Cinema(movieList, scheduleList);
 
-            Panel scrollablePanel = new Panel();
-            scrollablePanel.AutoScroll = true; // Enable scrolling
-            scrollablePanel.Dock = DockStyle.Fill; // Fill the entire form
-            this.Controls.Add(scrollablePanel);
-
-            int totalHeight = 0; // Variable to keep track of total height of added blocks
-
-            // Add multiple blocks
-            for (int i = 0; i < 10; i++) // Adjust the number of blocks as needed
+            mainContainerPanel = new Panel
             {
-                totalHeight += CreateUIBlock(scrollablePanel, i, totalHeight, scheduleList[i]);
-            }
+                Dock = DockStyle.Fill
+            };
+            this.Controls.Add(mainContainerPanel);
+
+            ShowScheduleView(scheduleList);
         }
 
-        private int CreateUIBlock(Panel parentPanel, int index, int yOffset, Schedule schedule)
+        private void ShowScheduleView(List<Schedule> scheduleList)
         {
+            // Clear the main container panel
+            mainContainerPanel.Controls.Clear();
 
-            // Create a Panel to hold the UI block
+            Panel scrollablePanel = new Panel
+            {
+                AutoScroll = true,
+                Dock = DockStyle.Fill
+            };
+            mainContainerPanel.Controls.Add(scrollablePanel);
+
+            int totalHeight = 0;
+
+            for (int i = 0; i < scheduleList.Count; i++)
+            {
+                totalHeight += CreateUIBlock(scrollablePanel, i, totalHeight, scheduleList[i], scheduleList);
+            }
+
+            scrollablePanel.AutoScrollMinSize = new Size(0, totalHeight);
+        }
+
+        private int CreateUIBlock(Panel parentPanel, int index, int yOffset, Schedule schedule, List<Schedule> scheduleList)
+        {
             Panel panel = new Panel
             {
                 BorderStyle = BorderStyle.FixedSingle,
-                Width = 500, // Adjust the width to fit all content horizontally
-                Top = yOffset, // Adjust the position based on index
+                Width = 500,
+                Top = yOffset,
                 Left = 10
             };
 
-            // Create the first label
             Label label1 = new Label
             {
                 Text = $"{schedule.Movie.Title}",
@@ -58,39 +66,123 @@ namespace Cinema_manager
             };
             panel.Controls.Add(label1);
 
-            // Create the second label
             Label label2 = new Label
             {
-                Text = $"{schedule.Movie.Description}",
+                Text = $"{schedule.StartTime.ToString()}",
                 Top = 10,
-                Left = 100 
+                Left = 110
             };
             panel.Controls.Add(label2);
 
-            // Create the third label
             Label label3 = new Label
             {
-                Text = $"{schedule.StartTime}",
+                Text = $"{schedule.EndTime.ToString()}",
                 Top = 10,
-                Left = 300
+                Left = 210
             };
             panel.Controls.Add(label3);
 
-            // Create the button
             Button button = new Button
             {
                 Text = $"Tickets",
                 Top = 10,
-                Left = 400 
+                Left = 350
             };
-            button.Click += (sender, e) => MessageBox.Show($"Button {index + 1} clicked!");
+            button.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList); // Show seat selection in the same window
             panel.Controls.Add(button);
 
-            // Add the block panel to the scrollable panel
             parentPanel.Controls.Add(panel);
 
-            // Return the height of this block to update yOffset
-            return panel.Height + 4; // 10 pixels for spacing between blocks
+            return panel.Height + 10;
+        }
+
+        private void ShowSeatSelectionView(Schedule schedule, List<Schedule> scheduleList)
+        {
+            // Clear the main container panel
+            mainContainerPanel.Controls.Clear();
+
+            // Add a Back button to return to the main view
+            Button backButton = new Button
+            {
+                Text = "Back",
+                Top = 10,
+                Left = 10
+            };
+            backButton.Click += (sender, e) => ShowScheduleView(scheduleList);
+            mainContainerPanel.Controls.Add(backButton);
+
+            int rows = schedule.GetTheater().TotalRows;
+            int cols = schedule.GetTheater().TotalCols;
+
+            foreach (Seat seat in schedule.GetTheater().Seats)
+            {
+                int i = seat.Row;
+                int j = seat.Column;
+                Button seatButton = new Button
+                {
+                    Width = 50,
+                    Height = 50,
+                    Left = 100 + j * 55,
+                    Top = 50 + i * 55,
+                    Text = $"{(char)('A' + i)}{j + 1}",
+                    Tag = seat
+                };
+
+                switch (seat.SeatStatus)
+                {
+                    case Seat.Status.FREE:
+                        seatButton.BackColor = Color.Green;
+                        break;
+                    case Seat.Status.SELECTED:
+                        seatButton.BackColor = Color.Yellow;
+                        break;
+                    case Seat.Status.TAKEN:
+                        seatButton.BackColor = Color.Red;
+                        break;
+                    default:
+                        seatButton.BackColor = Color.Gray;
+                        break;
+                }
+
+                seatButton.Click += (sender, e) =>
+                {
+                    Button clickedButton = (Button)sender;
+                    Seat clickedSeat = (Seat)clickedButton.Tag;
+
+                    if (clickedSeat.IsFree())
+                    {
+                        clickedSeat.SetSelected();
+                        schedule.GetTheater().setSeat(clickedSeat, i, j);
+                    }
+                    else
+                    {
+                        clickedSeat.SetFree();
+                        schedule.GetTheater().setSeat(clickedSeat, i, j);
+                    }
+                    UpdateSeatButtonColor(seatButton, seat.SeatStatus);
+                };
+
+                mainContainerPanel.Controls.Add(seatButton);
+            }
+        }
+
+        private void UpdateSeatButtonColor(Button seatButton, Seat.Status status)
+        {
+            switch (status)
+            {
+                case Seat.Status.FREE:
+                    seatButton.BackColor = Color.Green;
+                    break;
+                case Seat.Status.SELECTED:
+                    seatButton.BackColor = Color.Yellow;
+                    break;
+                case Seat.Status.TAKEN:
+                    seatButton.BackColor = Color.Red;
+                    break;
+                default:
+                    seatButton.BackColor = Color.Gray;
+                    break;
+            }
         }
     }
 }
