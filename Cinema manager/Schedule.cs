@@ -34,7 +34,7 @@ namespace Cinema_manager
             this.Movie = movie;
             this.StartTime = startTime;
             this.EndTime = endTime;
-            theater = new Theater(9, 9);
+            theater = new Theater(9, 15);
         }
 
         public Theater GetTheater()

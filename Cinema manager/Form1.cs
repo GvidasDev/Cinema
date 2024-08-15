@@ -13,6 +13,10 @@ namespace Cinema_manager
         {
             InitializeComponent();
 
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+
             List<Movie> movieList = InOut.GetMovies();
             List<Schedule> scheduleList = InOut.GetSchedules(movieList);
             Cinema cinema = new Cinema(movieList, scheduleList);
@@ -25,6 +29,7 @@ namespace Cinema_manager
 
             ShowScheduleView(scheduleList);
         }
+
 
         private void ShowScheduleView(List<Schedule> scheduleList)
         {
@@ -98,10 +103,8 @@ namespace Cinema_manager
 
         private void ShowSeatSelectionView(Schedule schedule, List<Schedule> scheduleList)
         {
-            // Clear the main container panel
             mainContainerPanel.Controls.Clear();
 
-            // Add a Back button to return to the main view
             Button backButton = new Button
             {
                 Text = "Back",
@@ -111,38 +114,36 @@ namespace Cinema_manager
             backButton.Click += (sender, e) => ShowScheduleView(scheduleList);
             mainContainerPanel.Controls.Add(backButton);
 
-            int rows = schedule.GetTheater().TotalRows;
-            int cols = schedule.GetTheater().TotalCols;
+            int rows = schedule.GetTheater().TotalRows + 1;
+            int cols = schedule.GetTheater().TotalCols + 1;
+
+            int totalGridWidth = cols * 55;
+            int totalGridHeight = rows * 55;
+
+            int containerWidth = mainContainerPanel.Width;
+            int containerHeight = mainContainerPanel.Height;
+
+            int startX = (containerWidth - totalGridWidth) / 2;
+            int startY = (containerHeight - totalGridHeight) / 2;
+
+            startX = Math.Max(0, startX);
+            startY = Math.Max(0, startY);
 
             foreach (Seat seat in schedule.GetTheater().Seats)
             {
-                int i = seat.Row;
-                int j = seat.Column;
+                int i = seat.Row-1;
+                int j = seat.Column-1;
                 Button seatButton = new Button
                 {
                     Width = 50,
                     Height = 50,
-                    Left = 100 + j * 55,
-                    Top = 50 + i * 55,
+                    Left = startX + j * 55,
+                    Top = startY + i * 55,
                     Text = $"{(char)('A' + i)}{j + 1}",
                     Tag = seat
                 };
 
-                switch (seat.SeatStatus)
-                {
-                    case Seat.Status.FREE:
-                        seatButton.BackColor = Color.Green;
-                        break;
-                    case Seat.Status.SELECTED:
-                        seatButton.BackColor = Color.Yellow;
-                        break;
-                    case Seat.Status.TAKEN:
-                        seatButton.BackColor = Color.Red;
-                        break;
-                    default:
-                        seatButton.BackColor = Color.Gray;
-                        break;
-                }
+                UpdateSeatButtonColor(seatButton, seat.SeatStatus);
 
                 seatButton.Click += (sender, e) =>
                 {
