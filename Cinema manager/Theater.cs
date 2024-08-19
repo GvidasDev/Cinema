@@ -60,6 +60,30 @@ namespace Cinema_manager
             }
         }
 
+        public int getTotalSeats() 
+        {
+            return TotalRows * TotalCols;
+        }
+
+        public int getTotalTaken()
+        {
+            int num = 0;
+            foreach (Seat seat in Seats)
+            {
+                num += seat.IsTaken() ? 1 : 0;
+            }
+            return num;
+        }
+
+        public int getTotalSelected()
+        {
+            int num = 0;
+            foreach (Seat seat in Seats)
+            {
+                num += seat.IsSelected() ? 1 : 0;
+            }
+            return num;
+        }
 
         public string Output()
         {

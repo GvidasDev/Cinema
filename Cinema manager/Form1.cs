@@ -58,7 +58,7 @@ namespace Cinema_manager
             Panel panel = new Panel
             {
                 BorderStyle = BorderStyle.FixedSingle,
-                Width = 500,
+                Width = 550,
                 Top = yOffset,
                 Left = 10
             };
@@ -66,6 +66,7 @@ namespace Cinema_manager
             Label label1 = new Label
             {
                 Text = $"{schedule.Movie.Title}",
+                Width = 100,
                 Top = 10,
                 Left = 10
             };
@@ -74,6 +75,7 @@ namespace Cinema_manager
             Label label2 = new Label
             {
                 Text = $"{schedule.StartTime.ToString()}",
+                Width = 100,
                 Top = 10,
                 Left = 110
             };
@@ -82,16 +84,30 @@ namespace Cinema_manager
             Label label3 = new Label
             {
                 Text = $"{schedule.EndTime.ToString()}",
+                Width = 100,
                 Top = 10,
                 Left = 210
             };
             panel.Controls.Add(label3);
 
+            double totalSeats = schedule.GetTheater().getTotalSeats();
+            double perc = totalSeats > 0 ? (schedule.GetTheater().getTotalTaken() * 100) / totalSeats : 0;
+
+            Label label4 = new Label
+            {
+                Text = $"{perc:F0}%",
+                Width = 50,
+                Top = 10,
+                Left = 310
+            };
+            panel.Controls.Add(label4);
+
             Button button = new Button
             {
                 Text = $"Tickets",
+                Width = 100,
                 Top = 10,
-                Left = 350
+                Left = 400
             };
             button.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList);
             panel.Controls.Add(button);
