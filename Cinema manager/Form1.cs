@@ -33,7 +33,6 @@ namespace Cinema_manager
 
         private void ShowScheduleView(List<Schedule> scheduleList)
         {
-            // Clear the main container panel
             mainContainerPanel.Controls.Clear();
 
             Panel scrollablePanel = new Panel
@@ -93,7 +92,7 @@ namespace Cinema_manager
                 Top = 10,
                 Left = 350
             };
-            button.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList); // Show seat selection in the same window
+            button.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList);
             panel.Controls.Add(button);
 
             parentPanel.Controls.Add(panel);
@@ -111,8 +110,18 @@ namespace Cinema_manager
                 Top = 10,
                 Left = 10
             };
+
             backButton.Click += (sender, e) => ShowScheduleView(scheduleList);
             mainContainerPanel.Controls.Add(backButton);
+            
+            Button buyButton = new Button
+            {
+                Text = "Buy",
+                Top = 10,
+                Left = 100
+            };
+            buyButton.Click += (sender, e) => BuyTickets(schedule, scheduleList);
+            mainContainerPanel.Controls.Add(buyButton);
 
             int rows = schedule.GetTheater().TotalRows + 1;
             int cols = schedule.GetTheater().TotalCols + 1;
@@ -153,12 +162,10 @@ namespace Cinema_manager
                     if (clickedSeat.IsFree())
                     {
                         clickedSeat.SetSelected();
-                        schedule.GetTheater().setSeat(clickedSeat, i, j);
                     }
                     else
                     {
                         clickedSeat.SetFree();
-                        schedule.GetTheater().setSeat(clickedSeat, i, j);
                     }
                     UpdateSeatButtonColor(seatButton, seat.SeatStatus);
                 };
@@ -183,6 +190,24 @@ namespace Cinema_manager
                 default:
                     seatButton.BackColor = Color.Gray;
                     break;
+            }
+        }
+
+        private void BuyTickets(Schedule schedule, List<Schedule> scheduleList)
+        {
+            mainContainerPanel.Controls.Clear();
+            Button backButton = new Button
+            {
+                Text = "Back",
+                Top = 10,
+                Left = 10
+            };
+
+            backButton.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList);
+            mainContainerPanel.Controls.Add(backButton);
+            foreach (Schedule sched in scheduleList)
+            {
+                //TODO create tickets and output to json
             }
         }
     }
