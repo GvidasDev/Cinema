@@ -168,6 +168,10 @@ namespace Cinema_manager
                     {
                         clickedSeat.SetFree();
                     }
+                    else if (clickedSeat.IsTaken())
+                    {
+                        MessageBox.Show("This seat is taken!");
+                    }
                     UpdateSeatButtonColor(seatButton, seat.SeatStatus);
                 };
 
@@ -206,8 +210,8 @@ namespace Cinema_manager
 
             RichTextBox outputText = new RichTextBox
             {
-                Width = 400,
-                Height = 200,
+                Width = 800,
+                Height = 400,
                 ReadOnly = true,
                 Top = 60,
                 Left = 10,
@@ -226,14 +230,12 @@ namespace Cinema_manager
         {
             List<Ticket> list = new List<Ticket>();
             List<Seat> seats= schedule.GetTheater().Seats;
-            int id = 0;
             foreach (Seat seat in seats) 
             {
                 if (seat.SeatStatus == Seat.Status.SELECTED) 
                 {
-                    id++;
                     seat.SetTaken();
-                    Ticket ticket = new Ticket(id, schedule.Movie.Title, seat);
+                    Ticket ticket = new Ticket(schedule.Movie.Title, seat);
                     list.Add(ticket);
                 }
             }

@@ -9,11 +9,19 @@ namespace Cinema_manager
 {
     internal class Ticket
     {
+        private static int _idCounter = 0;
         public int Id { get; set; }
         public string Title { get; set; }
         public Seat Seat { get; set; }
 
         public Ticket() { }
+
+        public Ticket(string title, Seat seat)
+        {
+            this.Id = ++_idCounter;
+            this.Title = title;
+            this.Seat = seat;
+        }
 
         public Ticket(int id, string title, Seat seat)
         {
