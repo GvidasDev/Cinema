@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -120,7 +121,7 @@ namespace Cinema_manager
                 Top = 10,
                 Left = 100
             };
-            buyButton.Click += (sender, e) => BuyTickets(schedule, scheduleList);
+            buyButton.Click += (sender, e) => BuyTicketsView(schedule, scheduleList);
             mainContainerPanel.Controls.Add(buyButton);
 
             int rows = schedule.GetTheater().TotalRows + 1;
@@ -163,7 +164,7 @@ namespace Cinema_manager
                     {
                         clickedSeat.SetSelected();
                     }
-                    else
+                    else if(clickedSeat.IsSelected())
                     {
                         clickedSeat.SetFree();
                     }
@@ -193,7 +194,7 @@ namespace Cinema_manager
             }
         }
 
-        private void BuyTickets(Schedule schedule, List<Schedule> scheduleList)
+        private void BuyTicketsView(Schedule schedule, List<Schedule> scheduleList)
         {
             mainContainerPanel.Controls.Clear();
             Button backButton = new Button
@@ -203,12 +204,50 @@ namespace Cinema_manager
                 Left = 10
             };
 
+            RichTextBox outputText = new RichTextBox
+            {
+                Width = 400,
+                Height = 200,
+                ReadOnly = true,
+                Top = 60,
+                Left = 10,
+            };
+
             backButton.Click += (sender, e) => ShowSeatSelectionView(schedule, scheduleList);
             mainContainerPanel.Controls.Add(backButton);
-            foreach (Schedule sched in scheduleList)
+            mainContainerPanel.Controls.Add(outputText);
+            List<Ticket> tickets = MakeTickets(schedule);
+
+            outputText.AppendText(printTickets(tickets));
+            Console.WriteLine(printTickets(tickets));
+        }
+
+        private List<Ticket> MakeTickets(Schedule schedule) 
+        {
+            List<Ticket> list = new List<Ticket>();
+            List<Seat> seats= schedule.GetTheater().Seats;
+            int id = 0;
+            foreach (Seat seat in seats) 
             {
-                //TODO create tickets and output to json
+                if (seat.SeatStatus == Seat.Status.SELECTED) 
+                {
+                    id++;
+                    seat.SetTaken();
+                    Ticket ticket = new Ticket(id, schedule.Movie.Title, seat);
+                    list.Add(ticket);
+                }
             }
+            return list;
+        }
+
+        private string printTickets(List<Ticket> tickets) 
+        {
+            string output = "";
+            foreach (Ticket ticket in tickets)
+            {
+                output += ticket.ToString();
+            }
+            return output;
         }
     }
 }
