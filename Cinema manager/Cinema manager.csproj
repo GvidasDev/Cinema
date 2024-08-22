@@ -93,9 +93,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedule.cs" />
+    <Compile Include="ScheduleControllerUI.cs" />
     <Compile Include="Seat.cs" />
     <Compile Include="Theater.cs" />
+    <Compile Include="TheatreControllerUI.cs" />
     <Compile Include="Ticket.cs" />
+    <Compile Include="TicketControllerUI.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
