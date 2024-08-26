@@ -44,7 +44,7 @@ namespace Cinema_manager
 
         public override string ToString()
         {
-            return string.Format($"Movie: {Movie.Title}, Start time: {StartTime}, End time: {EndTime}");
+            return string.Format($"Movie: {Movie.Title}, Start time: {StartTime.ToString("h:mm:ss tt")}, End time: {EndTime.ToString("h:mm:ss tt")}");
         }
 
         public override bool Equals(object obj)

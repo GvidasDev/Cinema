@@ -53,7 +53,7 @@ namespace Cinema_manager {
             panel.Controls.Add(label1);
 
             Label label2 = new Label {
-                Text = $"{schedule.StartTime}",
+                Text = $"{schedule.StartTime.ToString("h:mm:ss")}",
                 Width = 100,
                 Top = 10,
                 Left = 110
@@ -61,7 +61,7 @@ namespace Cinema_manager {
             panel.Controls.Add(label2);
 
             Label label3 = new Label {
-                Text = $"{schedule.EndTime}",
+                Text = $"{schedule.EndTime.ToString("h:mm:ss")}",
                 Width = 100,
                 Top = 10,
                 Left = 210

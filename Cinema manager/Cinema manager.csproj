@@ -130,7 +130,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Data files\movies.json" />
-    <None Include="Seats.json" />
+    <None Include="Data files\Seats.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
