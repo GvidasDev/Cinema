@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,12 @@ namespace Cinema_manager {
         }
         public void ShowTickets(Schedule schedule, List<Schedule> scheduleList) {
             mainContainerPanel.Controls.Clear();
+
             Button backButton = CreateBackButton(schedule, scheduleList);
             RichTextBox outputText = CreateRichTextBox(mainContainerPanel);
 
             List<Ticket> tickets = MakeTickets(schedule);
+
             outputText.AppendText(PrintTickets(tickets));
         }
 
@@ -55,6 +58,8 @@ namespace Cinema_manager {
             return outputText;
         }
 
+
+
         private List<Ticket> MakeTickets(Schedule schedule) {
             List<Ticket> list = new List<Ticket>();
             List<Seat> seats = schedule.GetTheater().Seats;
@@ -66,7 +71,7 @@ namespace Cinema_manager {
                 }
             }
             return list;
-        }
+        } 
 
         private string PrintTickets(List<Ticket> tickets) {
             return string.Join(Environment.NewLine, tickets.Select(ticket => ticket.ToString()));

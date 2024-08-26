@@ -30,13 +30,13 @@ namespace Cinema_manager {
             int totalHeight = 0;
 
             for (int i = 0; i < scheduleList.Count; i++) {
-                totalHeight += CreateUIBlock(scrollablePanel, i, totalHeight, scheduleList[i], scheduleList);
+                totalHeight += CreateUIBlock(scrollablePanel, totalHeight, scheduleList[i], scheduleList);
             }
 
             scrollablePanel.AutoScrollMinSize = new Size(0, totalHeight);
         }
 
-        private int CreateUIBlock(Panel parentPanel, int index, int yOffset, Schedule schedule, List<Schedule> scheduleList) {
+        private int CreateUIBlock(Panel parentPanel, int yOffset, Schedule schedule, List<Schedule> scheduleList) {
             Panel panel = new Panel {
                 BorderStyle = BorderStyle.FixedSingle,
                 Width = 550,
